@@ -1,5 +1,6 @@
 package com.chess.engine.pieces;
 
+import com.chess.engine.game.Board;
 import com.chess.engine.game.Color;
 import com.chess.engine.game.PieceType;
 
@@ -9,6 +10,7 @@ import com.chess.engine.game.PieceType;
 public abstract class Piece {
 
     protected int row, col;
+    public Board chessBoard;
     protected final Color color;
 
     /**
@@ -17,10 +19,11 @@ public abstract class Piece {
      * @param pieceCol
      * @param pieceColor
      */
-    Piece(int pieceRow, int pieceCol, Color pieceColor) {
+    Piece(int pieceRow, int pieceCol, Color pieceColor, Board board) {
         this.row = pieceRow;
         this.col = pieceCol;
         this.color = pieceColor;
+        this.chessBoard = board;
     }
 
     /**
@@ -37,24 +40,17 @@ public abstract class Piece {
      */
     public abstract PieceType getType();
 
-
-    public int getRow() {
-        return this.row;
+    /**
+     * Helper method to check if Piece is within board boundary
+     * @param nextRow
+     * @param nextCol
+     * @return boolean
+     */
+    public boolean inBoardBounds(int nextRow, int nextCol) {
+        if (nextRow < 0 || nextCol < 0 || nextRow >= 8 || nextCol >= 8) {
+            return false;
+        }
+        return true;
     }
 
-    public int getCol() {
-        return this.col;
-    }
-
-    public Color getPieceColor() {
-        return this.color;
-    }
-
-    public void setRow(int nextRow) {
-        this.row = nextRow;
-    }
-
-    public void setCol(int nextCol) {
-        this.col = nextCol;
-    }
 }

@@ -4,20 +4,20 @@ import com.chess.engine.game.Board;
 import com.chess.engine.game.Color;
 import com.chess.engine.game.PieceType;
 
-public class Knight extends Piece{
+public class Queen extends Piece{
     /**
-     * Constructor for Knight
+     * Constructor for Queen
      *
      * @param pieceRow
      * @param pieceCol
      * @param pieceColor
      */
-    Knight(int pieceRow, int pieceCol, Color pieceColor, Board board) {
+    Queen(int pieceRow, int pieceCol, Color pieceColor, Board board) {
         super(pieceRow, pieceCol, pieceColor, board);
     }
 
     /**
-     * Knight specific implementation of abstract method
+     * Queen specific implementation of abstract method
      *
      * @param nextRow
      * @param nextCol
@@ -25,10 +25,10 @@ public class Knight extends Piece{
      */
     @Override
     public boolean isValidSpecialMove(int nextRow, int nextCol) {
-        int rowDiff = Math.abs(nextRow - this.row);
-        int colDiff = Math.abs(nextCol - this.col);
+        int rowDisplacement = Math.abs(nextRow - this.row);
+        int colDisplacement = Math.abs(nextCol - this.col);
 
-        if((rowDiff == 1 && colDiff == 2) || (rowDiff == 2 && colDiff == 1)) {
+        if((rowDisplacement == colDisplacement) || (nextRow == this.row) || (nextCol == this.col)) {
             return true;
         }
         return false;
@@ -41,6 +41,6 @@ public class Knight extends Piece{
      */
     @Override
     public PieceType getType() {
-        return PieceType.KNIGHT;
+        return PieceType.QUEEN;
     }
 }
