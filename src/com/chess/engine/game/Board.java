@@ -28,4 +28,27 @@ public class Board {
 
     }
 
+    public void setUpKnights() {
+
+    }
+
+    public void setUpRooks() {
+
+    }
+
+    public void setUpBishops() {
+
+    }
+
+    public void setUpPawns() {
+
+    }
+
+    public void setUpQueens() {
+
+    }
+
+    public void setUpKings() {
+
+    }
 }
