@@ -12,7 +12,7 @@ public class Pawn extends Piece{
      * @param pieceCol
      * @param pieceColor
      */
-    Pawn(int pieceRow, int pieceCol, Color pieceColor, Board board) {
+    public Pawn(int pieceRow, int pieceCol, Color pieceColor, Board board) {
         super(pieceRow, pieceCol, pieceColor, board);
     }
 

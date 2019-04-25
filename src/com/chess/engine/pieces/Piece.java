@@ -112,4 +112,5 @@ public abstract class Piece {
         this.row = nextRow;
         this.col = nextCol;
     }
+
 }

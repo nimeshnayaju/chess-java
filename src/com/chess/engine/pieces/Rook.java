@@ -13,7 +13,7 @@ public class Rook extends Piece{
      * @param pieceCol
      * @param pieceColor
      */
-    Rook(int pieceRow, int pieceCol, Color pieceColor, Board board) {
+    public Rook(int pieceRow, int pieceCol, Color pieceColor, Board board) {
         super(pieceRow, pieceCol, pieceColor, board);
     }
 

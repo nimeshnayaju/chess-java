@@ -12,7 +12,7 @@ public class Queen extends Piece{
      * @param pieceCol
      * @param pieceColor
      */
-    Queen(int pieceRow, int pieceCol, Color pieceColor, Board board) {
+    public Queen(int pieceRow, int pieceCol, Color pieceColor, Board board) {
         super(pieceRow, pieceCol, pieceColor, board);
     }
 

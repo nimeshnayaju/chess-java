@@ -12,7 +12,7 @@ public class Knight extends Piece{
      * @param pieceCol
      * @param pieceColor
      */
-    Knight(int pieceRow, int pieceCol, Color pieceColor, Board board) {
+    public Knight(int pieceRow, int pieceCol, Color pieceColor, Board board) {
         super(pieceRow, pieceCol, pieceColor, board);
     }
 

@@ -13,7 +13,7 @@ public class Bishop extends Piece{
      * @param pieceCol
      * @param pieceColor
      */
-    Bishop(int pieceRow, int pieceCol, Color pieceColor, Board board) {
+    public Bishop(int pieceRow, int pieceCol, Color pieceColor, Board board) {
         super(pieceRow, pieceCol, pieceColor, board);
     }
 
