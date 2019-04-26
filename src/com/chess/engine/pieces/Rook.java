@@ -15,6 +15,7 @@ public class Rook extends Piece{
      */
     public Rook(int pieceRow, int pieceCol, Color pieceColor, Board board) {
         super(pieceRow, pieceCol, pieceColor, board);
+        this.pieceType = "Rook";
     }
 
     /**
@@ -32,13 +33,4 @@ public class Rook extends Piece{
         return false;
     }
 
-    /**
-     * Abstract method that returns the type of a Piece
-     *
-     * @return PieceType
-     */
-    @Override
-    public PieceType getType() {
-        return PieceType.ROOK;
-    }
 }

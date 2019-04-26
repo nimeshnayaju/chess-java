@@ -4,7 +4,7 @@ import com.chess.engine.pieces.*;
 
 public class Board {
 
-    protected static final int BOARD_SIZE = 8; // constant variable that sets the size of Chess board
+    public static final int BOARD_SIZE = 8; // constant variable that sets the size of Chess board
     public Tile[][] board;
 
     /**

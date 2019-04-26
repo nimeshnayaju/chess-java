@@ -14,6 +14,7 @@ public class Queen extends Piece{
      */
     public Queen(int pieceRow, int pieceCol, Color pieceColor, Board board) {
         super(pieceRow, pieceCol, pieceColor, board);
+        this.pieceType = "Queen";
     }
 
     /**
@@ -32,15 +33,5 @@ public class Queen extends Piece{
             return true;
         }
         return false;
-    }
-
-    /**
-     * A method that returns the type of a Piece
-     *
-     * @return PieceType
-     */
-    @Override
-    public PieceType getType() {
-        return PieceType.QUEEN;
     }
 }

@@ -15,6 +15,7 @@ public class Bishop extends Piece{
      */
     public Bishop(int pieceRow, int pieceCol, Color pieceColor, Board board) {
         super(pieceRow, pieceCol, pieceColor, board);
+        this.pieceType = "Bishop";
     }
 
     /**
@@ -44,13 +45,4 @@ public class Bishop extends Piece{
         return false;
     }
 
-    /**
-     * Abstract method that returns the type of a Piece
-     *
-     * @return PieceType
-     */
-    @Override
-    public PieceType getType() {
-        return PieceType.BISHOP;
-    }
 }
