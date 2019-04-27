@@ -26,8 +26,10 @@ public class Rook extends Piece{
      */
     @Override
     public boolean isValidSpecialMove(int nextRow, int nextCol) {
-        if((nextRow == this.row) || (nextCol == this.col)) {
-            return true;
+        int rowDisplacement = nextRow - this.row;
+        int colDisplacement = nextCol - this.col;
+        if((rowDisplacement == 0) || (colDisplacement == 0)) {
+            return this.isValidLeaping(rowDisplacement, colDisplacement);
         }
         return false;
     }

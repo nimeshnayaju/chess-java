@@ -2,6 +2,7 @@ package com.chess.engine.pieces;
 
 import com.chess.engine.game.Board;
 import com.chess.engine.game.Color;
+import com.chess.engine.game.Tile;
 
 public class Bishop extends Piece{
 
@@ -26,20 +27,11 @@ public class Bishop extends Piece{
      */
     @Override
     public boolean isValidSpecialMove(int nextRow, int nextCol) {
-        int rowDisplacement = Math.abs(nextRow - this.row);
-        int colDisplacement = Math.abs(nextCol - this.col);
+        int rowDisplacement = nextRow - this.row;
+        int colDisplacement = nextCol - this.col;
 
-        if(rowDisplacement == colDisplacement) {
-            int steps = Math.abs(rowDisplacement);
-            int rowDirection = rowDisplacement/steps;
-            int colDirection = colDisplacement/steps;
-
-            for(int i = 1; i < steps; i++) {
-                if(this.chessBoard.board[this.row + i*rowDirection][colDirection + i*colDirection] != null) {
-                    return false;
-                }
-            }
-            return true;
+        if(Math.abs(rowDisplacement) == Math.abs(colDisplacement)) {
+            return this.isValidLeaping(rowDisplacement, colDisplacement);
         }
         return false;
     }

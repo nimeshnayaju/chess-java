@@ -25,11 +25,11 @@ public class Queen extends Piece{
      */
     @Override
     public boolean isValidSpecialMove(int nextRow, int nextCol) {
-        int rowDisplacement = Math.abs(nextRow - this.row);
-        int colDisplacement = Math.abs(nextCol - this.col);
+        int rowDisplacement = nextRow - this.row;
+        int colDisplacement = nextCol - this.col;
 
-        if((rowDisplacement == colDisplacement) || (nextRow == this.row) || (nextCol == this.col)) {
-            return true;
+        if((Math.abs(rowDisplacement) == Math.abs(colDisplacement)) || (nextRow == this.row) || (nextCol == this.col)) {
+            return this.isValidLeaping(rowDisplacement, colDisplacement);
         }
         return false;
     }

@@ -106,6 +106,20 @@ public abstract class Piece {
         this.col = nextCol;
     }
 
+    protected boolean isValidLeaping(int rowDisplacement, int colDisplacement) {
+        int steps = Math.max(Math.abs(rowDisplacement), Math.abs(colDisplacement));
+        int rowDirection = rowDisplacement/steps;
+        int colDirection = colDisplacement/steps;
+
+        for(int i = 1; i < steps; i++) {
+            Tile tileToCheck = chessBoard.board[this.row + i*rowDirection][this.col + i*colDirection];
+            if(tileToCheck.isOccupied) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Helper method to check if the move would put the player's king into check
      * @param nextRow
