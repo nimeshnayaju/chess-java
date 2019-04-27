@@ -2,6 +2,7 @@ package com.chess.gui;
 
 import com.chess.engine.game.Board;
 import com.chess.engine.game.Tile;
+import com.chess.engine.game.Color;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,27 +13,37 @@ public class ChessDisplay extends JPanel {
     Board chessboard;
     int tileSize;
 
+    /**
+     * Constructor for ChessDisplay
+     * @param chessBoard
+     * @param tileSize
+     */
     public ChessDisplay(Board chessBoard, int tileSize) {
         this.chessboard = chessBoard;
         this.tileSize = tileSize;
     }
 
+    /**
+     * A method that overrides JPanel's paintComponent to draw custom components on the Panel
+     * @param graphic
+     */
     @Override
-    public void paintComponent(Graphics graphic) {
-        for(int row = 0; row < BOARD_SIZE; row++) {
-            for(int col = 0; col < BOARD_SIZE; col++) {
-                Tile tile = chessboard.board[row][col];
-                if(tile.color.equals(Color.BLACK)) {
-                    graphic.setColor(new Color(30, 30, 30));
-                    graphic.fillRect((tileSize*row), (7 - col)*tileSize, tileSize, tileSize);
-                    if(tile.isOccupied) {
-                        tile.occupyingPiece.drawPieceOnBoard(graphic, tileSize, row, col);
-                    } else {
-                        graphic.setColor(new Color(230, 230, 250));
-                        graphic.fillRect((tileSize*row), (7 - col)*tileSize, tileSize, tileSize);
-                        if(tile.isOccupied) {
-                            tile.occupyingPiece.drawPieceOnBoard(graphic, tileSize, row, col);
-                        }
+    public void paintComponent(Graphics graphic){
+        for(int i = 0; i < BOARD_SIZE; i++){
+            for(int j = 0; j < BOARD_SIZE; j++){
+                Tile tileToDraw = chessboard.board[i][j];
+                if(tileToDraw.color.equals(Color.BLACK)){
+                    graphic.setColor(new java.awt.Color(58,95,205));
+                    graphic.fillRect((tileSize*i), (7-j)*tileSize, tileSize, tileSize);
+                    if(tileToDraw.isOccupied) {
+                        tileToDraw.occupyingPiece.drawPieceOnBoard(graphic, tileSize, i, j);
+                    }
+                }
+                else{
+                    graphic.setColor(new java.awt.Color(230, 230, 250));
+                    graphic.fillRect((tileSize*i), (7-j)*tileSize, tileSize, tileSize);
+                    if(tileToDraw.isOccupied) {
+                        tileToDraw.occupyingPiece.drawPieceOnBoard(graphic, tileSize, i, j);
                     }
                 }
             }

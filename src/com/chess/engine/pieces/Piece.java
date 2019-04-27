@@ -2,7 +2,6 @@ package com.chess.engine.pieces;
 
 import com.chess.engine.game.Board;
 import com.chess.engine.game.Color;
-import com.chess.engine.game.PieceType;
 import com.chess.engine.game.Tile;
 
 import javax.imageio.ImageIO;
@@ -158,7 +157,7 @@ public abstract class Piece {
         if(this.color.equals(Color.BLACK)) {
             imageDirectory = "assets/black/";
         } else {
-            imageDirectory = "assets/black/";
+            imageDirectory = "assets/white/";
         }
         String imagePath = imageDirectory.concat(pieceName);
         drawPiece(graphic, tileSize, imagePath, row, col);
@@ -169,10 +168,10 @@ public abstract class Piece {
      * @param graphic
      * @param tileSize
      * @param imagePath
-     * @param row
-     * @param col
+     * @param x
+     * @param y
      */
-    private void drawPiece(Graphics graphic, int tileSize, String imagePath, int row, int col) {
+    private void drawPiece(Graphics graphic, int tileSize, String imagePath, int x, int y) {
         File imageFile = new File(imagePath);
         BufferedImage image = null;
         try {
@@ -180,10 +179,10 @@ public abstract class Piece {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int imageHeight = image.getHeight();
-        int imageWidth = image.getWidth();
+        int imageHeight = image.getHeight()/2;
+        int imageWidth = image.getWidth()/2;
         int heightPadding = (tileSize - imageHeight)/2;
         int widthPadding = (tileSize - imageWidth)/2;
-        graphic.drawImage(image, (tileSize*row) + widthPadding, ((7 - col)*tileSize) + heightPadding, imageWidth, imageHeight, null);
+        graphic.drawImage(image, (tileSize*x) + widthPadding, ((7-y)*tileSize) + heightPadding, imageWidth, imageHeight, null);
     }
 }

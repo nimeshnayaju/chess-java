@@ -2,7 +2,6 @@ package com.chess.engine.pieces;
 
 import com.chess.engine.game.Board;
 import com.chess.engine.game.Color;
-import com.chess.engine.game.PieceType;
 
 public class Pawn extends Piece{
     /**
