@@ -163,7 +163,6 @@ public class ChessGame {
                         firstClick = true;
                     }
                     else if(gameTurn == movingPiece.color) {
-                        System.out.println(movingPiece);
                         firstClick = false;
                     }
                 } else {
@@ -171,9 +170,6 @@ public class ChessGame {
                     int finalCol = e.getY();
                     finalRow = finalRow/tileSize;
                     finalCol = 7 - finalCol/tileSize;
-
-                    System.out.println(finalRow);
-                    System.out.println(finalCol);
 
                     if(movingPiece.canMoveTo(finalRow, finalCol)) {
                         Piece enemyPiece = null;

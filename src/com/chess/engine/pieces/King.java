@@ -25,6 +25,12 @@ public class King extends Piece{
      */
     @Override
     public boolean isValidSpecialMove(int nextRow, int nextCol) {
+        int rowDisplacement = Math.abs(this.row - nextRow);
+        int colDisplacement = Math.abs(this.col - nextCol);
+
+        if((rowDisplacement == 1 && colDisplacement == 1) || (rowDisplacement == 1 && colDisplacement == 0) || (rowDisplacement == 0 && colDisplacement == 1)) {
+            return true;
+        }
         return false;
     }
 

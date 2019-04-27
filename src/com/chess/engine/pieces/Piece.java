@@ -42,7 +42,7 @@ public abstract class Piece {
      * @param nextCol
      * @return boolean
      */
-    public abstract boolean isValidSpecialMove(int nextRow, int nextCol);
+    protected abstract boolean isValidSpecialMove(int nextRow, int nextCol);
 
     /**
      * A method that checks if a Piece can be moved to a location
@@ -51,7 +51,7 @@ public abstract class Piece {
      * @return boolean
      */
     public boolean canMoveTo(int nextRow, int nextCol) {
-        if(inBoardBounds(nextRow, nextCol) && isValidSpecialMove(nextRow, nextCol) && hasEnemyPieceAtDestination(nextRow, nextCol)) {
+        if(inBoardBounds(nextRow, nextCol) && isValidSpecialMove(nextRow, nextCol) && hasEnemyPieceAtDestination(nextRow, nextCol) && isNotOrigin(nextRow, nextCol)) {
             return true;
         }
         return false;
@@ -63,7 +63,7 @@ public abstract class Piece {
      * @param nextCol
      * @return boolean
      */
-    public boolean inBoardBounds(int nextRow, int nextCol) {
+    private boolean inBoardBounds(int nextRow, int nextCol) {
         if (nextRow < 0 || nextCol < 0 || nextRow >= 8 || nextCol >= 8) {
             return false;
         }
@@ -76,7 +76,7 @@ public abstract class Piece {
      * @param nextCol
      * @return boolean
      */
-    public boolean hasEnemyPieceAtDestination(int nextRow, int nextCol) {
+    private boolean hasEnemyPieceAtDestination(int nextRow, int nextCol) {
         Tile destinationTile = chessBoard.board[nextRow][nextCol];
         if(destinationTile.isOccupied) {
             if(this.color.equals(destinationTile.occupyingPiece.color)) {
@@ -106,6 +106,12 @@ public abstract class Piece {
         this.col = nextCol;
     }
 
+    /**
+     * A helper method to check if the Piece illegally leaps over another Piece
+     * @param rowDisplacement
+     * @param colDisplacement
+     * @return
+     */
     protected boolean isValidLeaping(int rowDisplacement, int colDisplacement) {
         int steps = Math.max(Math.abs(rowDisplacement), Math.abs(colDisplacement));
         int rowDirection = rowDisplacement/steps;
@@ -116,6 +122,19 @@ public abstract class Piece {
             if(tileToCheck.isOccupied) {
                 return false;
             }
+        }
+        return true;
+    }
+
+    /**
+     * A helper method to check if the Piece lands on the original Tile
+     * @param nextRow
+     * @param nextCol
+     * @return
+     */
+    private boolean isNotOrigin(int nextRow, int nextCol) {
+        if(this.row == nextRow && this.col == nextCol) {
+            return false;
         }
         return true;
     }
