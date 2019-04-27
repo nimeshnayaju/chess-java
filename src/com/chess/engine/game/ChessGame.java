@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Stack;
 
 public class ChessGame {
 
@@ -19,22 +20,36 @@ public class ChessGame {
     static Player playerBlack;
     int tileSize;
     boolean gameOver;
+    boolean firstClick;
 
     JFrame window;
     JPanel gamePanel;
     JPanel sidePanel;
 
+    JLabel whiteLabel;
+    JLabel blackLabel;
+
     JButton restartButton;
 
+    Stack<Move> moveStack;
+
+    /**
+     * A method to initialize the chess board
+     */
     public void gameInit() {
         this.chessBoard = new Board();
         chessBoard.populateBoardWithTiles();
         chessBoard.populateBoardWithPieces();
         gameTurn = Color.WHITE;
         gameOver = false;
+        firstClick = true;
         tileSize = 60;
+        moveStack = new Stack();
     }
 
+    /**
+     * A helper method to display and set up players for the current game
+     */
     private static void playersInit() {
         String nameWhite = JOptionPane.showInputDialog("Please input Player 1 (White) name");
         String nameBlack = JOptionPane.showInputDialog("Please input Player 2 (Black) name");
@@ -43,6 +58,9 @@ public class ChessGame {
         playerBlack = new Player(nameBlack, Color.BLACK);
     }
 
+    /**
+     * A method to start the game thread and run game loop
+     */
     public void gameStart() {
         Thread gameThread = new Thread() {
             @Override
@@ -90,8 +108,13 @@ public class ChessGame {
 
         setUpButtonListeners();
 
+        whiteLabel = new JLabel("Player 1: ".concat(playerWhite.playerName));
+        blackLabel = new JLabel("Player 2: ".concat(playerBlack.playerName));
+
         sideDisplay.setLayout(new BoxLayout(sideDisplay, BoxLayout.PAGE_AXIS));
         sideDisplay.add(restartButton);
+        sideDisplay.add(whiteLabel);
+        sideDisplay.add(blackLabel);
 
         return sideDisplay;
     }
@@ -129,27 +152,43 @@ public class ChessGame {
              */
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-            }
+                if(firstClick) {
+                    int originRow = e.getX();
+                    int originCol = e.getY();
+                    originRow = originRow/tileSize;
+                    originCol = 7 - originCol/tileSize;
 
-            /**
-             * {@inheritDoc}
-             *
-             * @param e
-             */
-            @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-            }
+                    movingPiece = chessBoard.board[originRow][originCol].occupyingPiece;
+                    if(movingPiece == null) {
+                        firstClick = true;
+                    }
+                    else if(gameTurn == movingPiece.color) {
+                        System.out.println(movingPiece);
+                        firstClick = false;
+                    }
+                } else {
+                    int finalRow = e.getX();
+                    int finalCol = e.getY();
+                    finalRow = finalRow/tileSize;
+                    finalCol = 7 - finalCol/tileSize;
 
-            /**
-             * {@inheritDoc}
-             *
-             * @param e
-             */
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
+                    System.out.println(finalRow);
+                    System.out.println(finalCol);
+
+                    if(movingPiece.canMoveTo(finalRow, finalCol)) {
+                        Piece enemyPiece = null;
+                        if(chessBoard.board[finalRow][finalCol].isOccupied) {
+                            enemyPiece = chessBoard.board[finalRow][finalCol].occupyingPiece;
+                        }
+                        Move newMove = new Move(movingPiece, enemyPiece, finalRow, finalCol);
+                        moveStack.add(newMove);
+                        newMove.executeMove();
+                        gameTurn = gameTurn.opposite();
+                    } else {
+                        JOptionPane.showMessageDialog(null,"Illegal Move", "Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+                    firstClick = true;
+                }
             }
         });
     }
@@ -164,6 +203,7 @@ public class ChessGame {
         newGame.gameInit();
         newGame.setUpDisplay();
         newGame.gameStart();
+        newGame.mouseActions();
     }
 }
 

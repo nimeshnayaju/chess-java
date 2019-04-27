@@ -15,9 +15,9 @@ import java.io.IOException;
  */
 public abstract class Piece {
 
-    protected int row, col;
+    public int row, col;
     public Board chessBoard;
-    protected final Color color;
+    public final Color color;
     String pieceType;
 
     /**
@@ -50,7 +50,7 @@ public abstract class Piece {
      * @param nextCol
      * @return boolean
      */
-    public boolean canMove(int nextRow, int nextCol) {
+    public boolean canMoveTo(int nextRow, int nextCol) {
         if(inBoardBounds(nextRow, nextCol) && isValidSpecialMove(nextRow, nextCol) && hasEnemyPieceAtDestination(nextRow, nextCol) && !moveWouldCauseCheck(nextRow, nextCol)) {
             return true;
         }

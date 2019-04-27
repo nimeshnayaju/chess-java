@@ -33,7 +33,7 @@ public class ChessDisplay extends JPanel {
             for(int j = 0; j < BOARD_SIZE; j++){
                 Tile tileToDraw = chessboard.board[i][j];
                 if(tileToDraw.color.equals(Color.BLACK)){
-                    graphic.setColor(new java.awt.Color(58,95,205));
+                    graphic.setColor(new java.awt.Color(118, 205, 194));
                     graphic.fillRect((tileSize*i), (7-j)*tileSize, tileSize, tileSize);
                     if(tileToDraw.isOccupied) {
                         tileToDraw.occupyingPiece.drawPieceOnBoard(graphic, tileSize, i, j);

@@ -5,5 +5,14 @@ package com.chess.engine.game;
  */
 public enum Color {
     BLACK,
-    WHITE
+    WHITE;
+
+    public Color opposite() {
+        if(this == WHITE) {
+            return BLACK;
+        } else {
+            return WHITE;
+        }
+    }
+
 }
