@@ -51,7 +51,7 @@ public abstract class Piece {
      * @return boolean
      */
     public boolean canMoveTo(int nextRow, int nextCol) {
-        if(inBoardBounds(nextRow, nextCol) && isValidSpecialMove(nextRow, nextCol) && hasEnemyPieceAtDestination(nextRow, nextCol) && !moveWouldCauseCheck(nextRow, nextCol)) {
+        if(inBoardBounds(nextRow, nextCol) && isValidSpecialMove(nextRow, nextCol) && hasEnemyPieceAtDestination(nextRow, nextCol)) {
             return true;
         }
         return false;
@@ -79,31 +79,12 @@ public abstract class Piece {
     public boolean hasEnemyPieceAtDestination(int nextRow, int nextCol) {
         Tile destinationTile = chessBoard.board[nextRow][nextCol];
         if(destinationTile.isOccupied) {
-            if(this.color.equals(destinationTile.color)) {
+            if(this.color.equals(destinationTile.occupyingPiece.color)) {
                 return false;
             }
             return true;
         }
         return true;
-    }
-
-    /**
-     * Helper method to move a Piece into the given location
-     * @param nextRow
-     * @param nextCol
-     */
-    public void setPieceToLocation(int nextRow, int nextCol) {
-        Tile currentTile = chessBoard.board[this.row][this.col];
-        Tile destinationTile = chessBoard.board[nextRow][nextCol];
-
-        currentTile.isOccupied = false;
-        currentTile.occupyingPiece = null;
-
-        destinationTile.isOccupied = true;
-        destinationTile.occupyingPiece = this;
-
-        this.row = nextRow;
-        this.col = nextCol;
     }
 
     /**
@@ -120,6 +101,9 @@ public abstract class Piece {
 
         destinationTile.isOccupied = true;
         destinationTile.occupyingPiece = this;
+
+        this.row = nextRow;
+        this.col = nextCol;
     }
 
     /**
