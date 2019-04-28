@@ -1,5 +1,6 @@
 package com.chess.engine.game;
 
+import com.chess.engine.pieces.King;
 import com.chess.engine.pieces.Piece;
 import com.chess.gui.ChessDisplay;
 
@@ -28,6 +29,8 @@ public class ChessGame {
 
     JLabel whiteLabel;
     JLabel blackLabel;
+    JLabel whiteScore;
+    JLabel blackScore;
 
     JButton restartButton;
 
@@ -109,12 +112,19 @@ public class ChessGame {
         setUpButtonListeners();
 
         whiteLabel = new JLabel("Player 1: ".concat(playerWhite.playerName));
+        whiteLabel.setForeground(java.awt.Color.BLUE);
         blackLabel = new JLabel("Player 2: ".concat(playerBlack.playerName));
+
+        whiteScore = new JLabel("Score: " + playerWhite.playerScore);
+        whiteScore.setForeground(java.awt.Color.BLUE);
+        blackScore = new JLabel("Score: " + playerBlack.playerScore);
 
         sideDisplay.setLayout(new BoxLayout(sideDisplay, BoxLayout.PAGE_AXIS));
         sideDisplay.add(restartButton);
         sideDisplay.add(whiteLabel);
+        sideDisplay.add(whiteScore);
         sideDisplay.add(blackLabel);
+        sideDisplay.add(blackScore);
 
         return sideDisplay;
     }
@@ -180,6 +190,7 @@ public class ChessGame {
                         moveStack.add(newMove);
                         newMove.executeMove();
                         gameTurn = gameTurn.opposite();
+                        checkKingStatus(movingPiece);
                     } else {
                         JOptionPane.showMessageDialog(null,"Illegal Move", "Warning", JOptionPane.WARNING_MESSAGE);
                     }
@@ -187,6 +198,37 @@ public class ChessGame {
                 }
             }
         });
+    }
+
+    /**
+     * A helper method to check if the player's king is in check
+     * @param movingPiece
+     */
+    private void checkKingStatus(Piece movingPiece) {
+        Player currentPlayer;
+        Player opponentPlayer;
+        King kingToInspect;
+        if(movingPiece.color.equals(Color.WHITE)) {
+            currentPlayer = playerWhite;
+            opponentPlayer = playerBlack;
+            kingToInspect = chessBoard.blackKing;
+        } else {
+            currentPlayer = playerBlack;
+            opponentPlayer = playerWhite;
+            kingToInspect = chessBoard.whiteKing;
+        }
+
+        if(kingToInspect.isInCheck()) {
+            if(kingToInspect.isInCheckmate()) {
+                JOptionPane.showMessageDialog(null, currentPlayer.playerName + "'s King is in checkmate\n Please click Restart to play again", "Checkmate", JOptionPane.WARNING_MESSAGE);
+                gameOver = true;
+                opponentPlayer.playerScore++;
+                whiteScore.setText("Score: " + playerWhite.playerScore);
+                blackScore.setText("Score: " + playerBlack.playerScore);
+                return;
+            }
+            JOptionPane.showMessageDialog(null, currentPlayer.playerName + "'s King is in check", "Check", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     public static void main(String[] args) {

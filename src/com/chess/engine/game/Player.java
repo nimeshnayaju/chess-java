@@ -3,6 +3,7 @@ package com.chess.engine.game;
 public class Player {
     public String playerName;
     public Color playerColor;
+    public int playerScore;
 
     /**
      * Constructor for Player
@@ -12,5 +13,6 @@ public class Player {
     public Player(String playerName, Color playerColor) {
         this.playerName = playerName;
         this.playerColor = playerColor;
+        this.playerScore = 0;
     }
 }

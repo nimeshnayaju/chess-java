@@ -37,7 +37,7 @@ public class King extends Piece{
         return false;
     }
 
-    protected boolean isInCheck() {
+    public boolean isInCheck() {
         for(int i = 0; i < BOARD_SIZE; i++) {
             for(int j = 0; j < BOARD_SIZE; j++) {
                 Tile tileToCheck = chessBoard.board[i][j];
@@ -54,7 +54,7 @@ public class King extends Piece{
         return false;
     }
 
-    protected boolean isInCheckmate() {
+    public boolean isInCheckmate() {
         if(!this.isInCheck()) {
             return false;
         }
