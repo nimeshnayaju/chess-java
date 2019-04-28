@@ -218,8 +218,8 @@ public abstract class Piece {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int imageHeight = image.getHeight()/2;
-        int imageWidth = image.getWidth()/2;
+        int imageHeight = image.getHeight()/2 - 10;
+        int imageWidth = image.getWidth()/2 - 10;
         int heightPadding = (tileSize - imageHeight)/2;
         int widthPadding = (tileSize - imageWidth)/2;
         graphic.drawImage(image, (tileSize*x) + widthPadding, ((7-y)*tileSize) + heightPadding, imageWidth, imageHeight, null);

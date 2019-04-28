@@ -113,7 +113,7 @@ public class ChessGame {
      */
     private JPanel initializeGamePanel(Board chessBoard) {
         ChessDisplay chessDisplay = new ChessDisplay(chessBoard, tileSize);
-        chessDisplay.setPreferredSize(new Dimension(550, 550));
+        chessDisplay.setPreferredSize(new Dimension(480, 480));
         chessDisplay.setLayout(new BorderLayout());
         return chessDisplay;
     }
@@ -137,6 +137,7 @@ public class ChessGame {
         whiteScore = new JLabel("Score: " + playerWhite.playerScore);
         whiteScore.setForeground(java.awt.Color.BLUE);
         blackScore = new JLabel("Score: " + playerBlack.playerScore);
+
 
         sideDisplay.setLayout(new BoxLayout(sideDisplay, BoxLayout.PAGE_AXIS));
         sideDisplay.add(restartButton);
@@ -256,6 +257,8 @@ public class ChessGame {
                     else if(gameTurn == movingPiece.color) {
                         firstClick = false;
                     }
+
+
                 } else {
                     int finalRow = e.getX();
                     int finalCol = e.getY();

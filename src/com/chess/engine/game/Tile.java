@@ -2,7 +2,10 @@ package com.chess.engine.game;
 
 import com.chess.engine.pieces.Piece;
 
-public class Tile {
+import javax.swing.*;
+import javax.swing.border.Border;
+
+public class Tile extends JPanel{
     public boolean isOccupied;
     public Color color;
     public Piece occupyingPiece;
@@ -18,3 +21,4 @@ public class Tile {
         this.occupyingPiece = null;
     }
 }
+

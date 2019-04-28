@@ -3,9 +3,12 @@ package com.chess.gui;
 import com.chess.engine.game.Board;
 import com.chess.engine.game.Tile;
 import com.chess.engine.game.Color;
+import com.chess.engine.pieces.Piece;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import static com.chess.engine.game.Board.BOARD_SIZE;
 
@@ -21,6 +24,17 @@ public class ChessDisplay extends JPanel {
     public ChessDisplay(Board chessBoard, int tileSize) {
         this.chessboard = chessBoard;
         this.tileSize = tileSize;
+
+        addMouseListener(new MouseAdapter() {
+            /**
+             * {@inheritDoc}
+             *
+             * @param e
+             */
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
+        });
     }
 
     /**

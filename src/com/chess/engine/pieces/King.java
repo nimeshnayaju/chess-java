@@ -91,6 +91,8 @@ public class King extends Piece{
                                 enemyPiece.movePiece(i, j);
                                 return false;
                             }
+                            allyPiece.movePiece(allyOriginRow, allyOriginCol);
+                            enemyPiece.movePiece(i, j);
                         } else {
                             allyPiece.movePiece(i, j);
                             if(!this.isInCheck()) {
