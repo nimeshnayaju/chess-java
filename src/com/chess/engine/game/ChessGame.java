@@ -33,6 +33,8 @@ public class ChessGame {
     JLabel blackScore;
 
     JButton restartButton;
+    JButton undoButton;
+    JButton forfeitButton;
 
     Stack<Move> moveStack;
 
@@ -74,6 +76,9 @@ public class ChessGame {
         gameThread.start();
     }
 
+    /**
+     * A helper method to start the game loop
+     */
     public void gameLoop() {
         while(true) {
             if(gameOver) {
@@ -83,6 +88,9 @@ public class ChessGame {
         }
     }
 
+    /**
+     * A method to set up initial display (gamePanel and sidePanel) for the game
+     */
     public void setUpDisplay() {
         window = new JFrame("Chess");
         gamePanel = initializeGamePanel(chessBoard);
@@ -98,6 +106,11 @@ public class ChessGame {
         window.pack();
     }
 
+    /**
+     * A helper method to initialize game panel for the game
+     * @param chessBoard
+     * @return JPanel
+     */
     private JPanel initializeGamePanel(Board chessBoard) {
         ChessDisplay chessDisplay = new ChessDisplay(chessBoard, tileSize);
         chessDisplay.setPreferredSize(new Dimension(550, 550));
@@ -105,9 +118,15 @@ public class ChessGame {
         return chessDisplay;
     }
 
+    /**
+     * A helper method to initialize side panel for the game
+     * @return JPanel
+     */
     private JPanel initializeSidePanel() {
         JPanel sideDisplay = new JPanel();
         restartButton = new JButton("Restart");
+        undoButton = new JButton("Undo Move");
+        forfeitButton = new JButton("Forfeit Game");
 
         setUpButtonListeners();
 
@@ -121,6 +140,8 @@ public class ChessGame {
 
         sideDisplay.setLayout(new BoxLayout(sideDisplay, BoxLayout.PAGE_AXIS));
         sideDisplay.add(restartButton);
+        sideDisplay.add(undoButton);
+        sideDisplay.add(forfeitButton);
         sideDisplay.add(whiteLabel);
         sideDisplay.add(whiteScore);
         sideDisplay.add(blackLabel);
@@ -129,6 +150,9 @@ public class ChessGame {
         return sideDisplay;
     }
 
+    /**
+     * A helper method to set up the button listeners for Restart, Undo and Forfeit buttons
+     */
     private void setUpButtonListeners() {
         restartButton.addActionListener(new ActionListener() {
             @Override
@@ -136,8 +160,25 @@ public class ChessGame {
                 restartGame();
             }
         });
+
+        undoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                undoMove();
+            }
+        });
+
+        forfeitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                forfeitGame();
+            }
+        });
     }
 
+    /**
+     * A method to restart the game (called by Restart button)
+     */
     private void restartGame() {
         String player;
         if(gameTurn.equals(Color.WHITE)) {
@@ -153,6 +194,46 @@ public class ChessGame {
         }
     }
 
+    /**
+     * A method to undo the last Move from Move stack (called by Undo Move button)
+     */
+    private void undoMove() {
+        if(!moveStack.isEmpty()) {
+            // pops the last Move command off the Move stack and assigns it to latestMove
+            Move latestMove = moveStack.pop();
+            latestMove.undo();
+            gameTurn = gameTurn.opposite();
+        }
+    }
+
+    /**
+     * A method to forfeit the game (called by Forfeit Game button)
+     */
+    private void forfeitGame() {
+        Player currentPlayer;
+        Player opponentPlayer;
+
+        if(gameTurn == Color.WHITE) {
+            currentPlayer = playerWhite;
+            opponentPlayer = playerBlack;
+        } else {
+            currentPlayer = playerBlack;
+            opponentPlayer = playerWhite;
+        }
+
+        int response = JOptionPane.showConfirmDialog(null, currentPlayer.playerName + ", Do you want to forfeit the game?", "Forfeit", JOptionPane.YES_NO_OPTION);
+        if(response == JOptionPane.YES_OPTION) {
+            gameOver = true;
+            opponentPlayer.playerScore++;
+            whiteScore.setText("Score: " + playerWhite.playerScore);
+            blackScore.setText("Score: " + playerBlack.playerScore);
+            JOptionPane.showMessageDialog(null, currentPlayer.playerName + " has lost the game\n Please click Restart to play again", "Game Over", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    /**
+     * A method to override results of mouse actions
+     */
     public void mouseActions() {
         gamePanel.addMouseListener(new MouseAdapter() {
             /**
@@ -231,11 +312,18 @@ public class ChessGame {
         }
     }
 
+    /**
+     * A method to set up the players and start the game
+     * @param args
+     */
     public static void main(String[] args) {
         playersInit();
         startNewGame();
     }
 
+    /**
+     * A helper method to start a new game
+     */
     private static void startNewGame() {
         ChessGame newGame = new ChessGame();
         newGame.gameInit();

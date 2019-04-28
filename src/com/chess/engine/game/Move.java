@@ -27,4 +27,14 @@ public class Move {
     public void executeMove() {
         movingPiece.movePiece(finalRow, finalCol);
     }
+
+    /**
+     * A method to undo a move
+     */
+    public void undo() {
+        this.movingPiece.movePiece(originRow, originCol);
+        if(this.enemyPiece != null) {
+            this.enemyPiece.movePiece(finalRow, finalCol);
+        }
+    }
 }
