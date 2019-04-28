@@ -2,6 +2,9 @@ package com.chess.engine.pieces;
 
 import com.chess.engine.game.Board;
 import com.chess.engine.game.Color;
+import com.chess.engine.game.Tile;
+
+import static com.chess.engine.game.Board.BOARD_SIZE;
 
 public class King extends Piece{
     /**
@@ -32,6 +35,75 @@ public class King extends Piece{
             return true;
         }
         return false;
+    }
+
+    protected boolean isInCheck() {
+        for(int i = 0; i < BOARD_SIZE; i++) {
+            for(int j = 0; j < BOARD_SIZE; j++) {
+                Tile tileToCheck = chessBoard.board[i][j];
+                if(tileToCheck.isOccupied) {
+                    if(this.hasEnemyPieceAtDestination(i, j)) {
+                        Piece enemyPiece = tileToCheck.occupyingPiece;
+                        if(enemyPiece.isValidSpecialMove(this.row, this.col)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    protected boolean isInCheckmate() {
+        if(!this.isInCheck()) {
+            return false;
+        }
+        for(int i = 0; i < BOARD_SIZE; i++) {
+            for(int j = 0; j < BOARD_SIZE; j++) {
+                Tile tileToCheck = chessBoard.board[i][j];
+                if(tileToCheck.isOccupied) {
+                    if(!hasEnemyPieceAtDestination(i, j)) {
+                        Piece allyPiece = tileToCheck.occupyingPiece;
+                        if(!this.checkmateHelper(allyPiece)) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean checkmateHelper(Piece allyPiece) {
+        int allyOriginRow = allyPiece.row;
+        int allyOriginCol = allyPiece.col;
+
+        for(int i = 0; i < BOARD_SIZE; i++) {
+            for(int j = 0; j < BOARD_SIZE; j++) {
+                Tile tileToCheck = chessBoard.board[i][j];
+                if(hasEnemyPieceAtDestination(i, j)) {
+                    if(allyPiece.isValidSpecialMove(i, j)) {
+                        if(tileToCheck.isOccupied) {
+                            Piece enemyPiece = tileToCheck.occupyingPiece;
+                            allyPiece.movePiece(i, j);
+                            if(!this.isInCheck()) {
+                                allyPiece.movePiece(allyOriginRow, allyOriginCol);
+                                enemyPiece.movePiece(i, j);
+                                return false;
+                            }
+                        } else {
+                            allyPiece.movePiece(i, j);
+                            if(!this.isInCheck()) {
+                                allyPiece.movePiece(allyOriginRow, allyOriginCol);
+                                return false;
+                            }
+                            allyPiece.movePiece(allyOriginRow, allyOriginCol);
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 }

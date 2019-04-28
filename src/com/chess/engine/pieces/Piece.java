@@ -51,7 +51,7 @@ public abstract class Piece {
      * @return boolean
      */
     public boolean canMoveTo(int nextRow, int nextCol) {
-        if(inBoardBounds(nextRow, nextCol) && isValidSpecialMove(nextRow, nextCol) && hasEnemyPieceAtDestination(nextRow, nextCol) && isNotOrigin(nextRow, nextCol)) {
+        if(inBoardBounds(nextRow, nextCol) && isNotOrigin(nextRow, nextCol) && isValidSpecialMove(nextRow, nextCol) && hasEnemyPieceAtDestination(nextRow, nextCol) && !wouldPutYourKingInCheck(nextRow, nextCol)) {
             return true;
         }
         return false;
@@ -76,7 +76,7 @@ public abstract class Piece {
      * @param nextCol
      * @return boolean
      */
-    private boolean hasEnemyPieceAtDestination(int nextRow, int nextCol) {
+    protected boolean hasEnemyPieceAtDestination(int nextRow, int nextCol) {
         Tile destinationTile = chessBoard.board[nextRow][nextCol];
         if(destinationTile.isOccupied) {
             if(this.color.equals(destinationTile.occupyingPiece.color)) {
@@ -145,19 +145,41 @@ public abstract class Piece {
      * @param nextCol
      * @return boolean
      */
-    public boolean moveWouldCauseCheck(int nextRow, int nextCol) {
-        return false;
-    }
+    public boolean wouldPutYourKingInCheck(int nextRow, int nextCol) {
+        int originRow = this.row;
+        int originCol = this.col;
+        King kingToInspect;
+        Tile tileToCheck = chessBoard.board[nextRow][nextCol];
+        if(tileToCheck.isOccupied) {
+            Piece enemyPiece = tileToCheck.occupyingPiece;
+            if(this.color.equals(Color.WHITE)) {
+                kingToInspect = chessBoard.whiteKing;
+            } else {
+                kingToInspect = chessBoard.blackKing;
+            }
 
-    public boolean isInCheckMate(King kingToCheck) {
-        return false;
-    }
+            this.movePiece(nextRow, nextCol);
+            if(kingToInspect.isInCheck()) {
+                this.movePiece(originRow, originCol);
+                enemyPiece.movePiece(nextRow, nextCol);
+                return true;
+            }
+            this.movePiece(originRow, originCol);
+            enemyPiece.movePiece(nextRow, nextCol);
 
-    public boolean isInCheck(King kingToCheck) {
-        return false;
-    }
-
-    public boolean isInStalemate(King kingToCheck) {
+        } else {
+            if(this.color.equals(Color.WHITE)) {
+                kingToInspect = chessBoard.whiteKing;
+            } else {
+                kingToInspect = chessBoard.blackKing;
+            }
+            this.movePiece(nextRow, nextCol);
+            if(kingToInspect.isInCheck()) {
+                this.movePiece(originRow, originCol);
+                return true;
+            }
+            this.movePiece(originRow, originCol);
+        }
         return false;
     }
 

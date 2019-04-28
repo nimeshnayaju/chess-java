@@ -7,6 +7,9 @@ public class Board {
     public static final int BOARD_SIZE = 8; // constant variable that sets the size of Chess board
     public Tile[][] board;
 
+    public King whiteKing;
+    public King blackKing;
+
     /**
      * Constructor for Board
      */
@@ -146,9 +149,9 @@ public class Board {
      * Method to set up Kings into their initial position
      */
     public void setUpKings() {
-        King whiteKing = new King(4, 0, Color.WHITE, this);
+        whiteKing = new King(4, 0, Color.WHITE, this);
 
-        King blackKing = new King(4, 7, Color.BLACK, this);
+        blackKing = new King(4, 7, Color.BLACK, this);
 
         this.board[4][0].isOccupied = true;
         this.board[4][0].occupyingPiece = whiteKing;
