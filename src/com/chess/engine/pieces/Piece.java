@@ -16,7 +16,7 @@ import java.io.IOException;
 public abstract class Piece {
 
     public int row, col;
-    public Board chessBoard;
+    Board chessBoard;
     public final Color color;
     String pieceType;
 
@@ -37,7 +37,7 @@ public abstract class Piece {
     }
 
     /**
-     * Abstract method that checks if the specific Piece to move to a location specified by (nextRow, nextCol)
+     * Abstract method that checks if the specific Piece can move to a location specified by (nextRow, nextCol)
      * @param nextRow
      * @param nextCol
      * @return boolean
@@ -76,7 +76,7 @@ public abstract class Piece {
      * @param nextCol
      * @return boolean
      */
-    protected boolean hasEnemyPieceAtDestination(int nextRow, int nextCol) {
+    boolean hasEnemyPieceAtDestination(int nextRow, int nextCol) {
         Tile destinationTile = chessBoard.board[nextRow][nextCol];
         if(destinationTile.isOccupied) {
             if(this.color.equals(destinationTile.occupyingPiece.color)) {
@@ -112,7 +112,7 @@ public abstract class Piece {
      * @param colDisplacement
      * @return
      */
-    protected boolean isValidLeaping(int rowDisplacement, int colDisplacement) {
+    boolean isValidLeaping(int rowDisplacement, int colDisplacement) {
         int steps = Math.max(Math.abs(rowDisplacement), Math.abs(colDisplacement));
         int rowDirection = rowDisplacement/steps;
         int colDirection = colDisplacement/steps;
@@ -145,7 +145,7 @@ public abstract class Piece {
      * @param nextCol
      * @return boolean
      */
-    public boolean wouldPutYourKingInCheck(int nextRow, int nextCol) {
+    private boolean wouldPutYourKingInCheck(int nextRow, int nextCol) {
         int originRow = this.row;
         int originCol = this.col;
         King kingToInspect;

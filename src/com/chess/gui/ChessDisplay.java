@@ -13,28 +13,16 @@ import java.awt.event.MouseEvent;
 import static com.chess.engine.game.Board.BOARD_SIZE;
 
 public class ChessDisplay extends JPanel {
-    Board chessboard;
-    int tileSize;
-
+    private Board chessBoard;
+    private int tileSize;
     /**
      * Constructor for ChessDisplay
      * @param chessBoard
      * @param tileSize
      */
     public ChessDisplay(Board chessBoard, int tileSize) {
-        this.chessboard = chessBoard;
+        this.chessBoard = chessBoard;
         this.tileSize = tileSize;
-
-        addMouseListener(new MouseAdapter() {
-            /**
-             * {@inheritDoc}
-             *
-             * @param e
-             */
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            }
-        });
     }
 
     /**
@@ -45,9 +33,9 @@ public class ChessDisplay extends JPanel {
     public void paintComponent(Graphics graphic){
         for(int i = 0; i < BOARD_SIZE; i++){
             for(int j = 0; j < BOARD_SIZE; j++){
-                Tile tileToDraw = chessboard.board[i][j];
+                Tile tileToDraw = chessBoard.board[i][j];
                 if(tileToDraw.color.equals(Color.BLACK)){
-                    graphic.setColor(new java.awt.Color(118, 205, 194));
+                    graphic.setColor(new java.awt.Color(179, 86, 5));
                     graphic.fillRect((tileSize*i), (7-j)*tileSize, tileSize, tileSize);
                     if(tileToDraw.isOccupied) {
                         tileToDraw.occupyingPiece.drawPieceOnBoard(graphic, tileSize, i, j);

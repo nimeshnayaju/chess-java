@@ -15,7 +15,7 @@ public class Tile extends JPanel{
      * @param isOccupied
      * @param color
      */
-    public Tile(boolean isOccupied, Color color) {
+    Tile(boolean isOccupied, Color color) {
         this.isOccupied = isOccupied;
         this.color = color;
         this.occupyingPiece = null;

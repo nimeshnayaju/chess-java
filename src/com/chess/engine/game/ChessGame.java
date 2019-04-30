@@ -14,34 +14,31 @@ import java.util.Stack;
 
 public class ChessGame {
 
-    Board chessBoard;
-    Piece movingPiece;
-    Color gameTurn;
-    static Player playerWhite;
-    static Player playerBlack;
-    int tileSize;
-    boolean gameOver;
-    boolean firstClick;
+    private Board chessBoard;
+    private Piece movingPiece;
+    private Color gameTurn;
+    private static Player playerWhite;
+    private static Player playerBlack;
+    private int tileSize;
+    private boolean gameOver;
+    private boolean firstClick;
 
-    JFrame window;
-    JPanel gamePanel;
-    JPanel sidePanel;
+    private JFrame window;
+    private JPanel gamePanel;
 
-    JLabel whiteLabel;
-    JLabel blackLabel;
-    JLabel whiteScore;
-    JLabel blackScore;
+    private JLabel whiteScore;
+    private JLabel blackScore;
 
-    JButton restartButton;
-    JButton undoButton;
-    JButton forfeitButton;
+    private JButton restartButton;
+    private JButton undoButton;
+    private JButton forfeitButton;
 
-    Stack<Move> moveStack;
+    private Stack<Move> moveStack;
 
     /**
      * A method to initialize the chess board
      */
-    public void gameInit() {
+    private void gameInit() {
         this.chessBoard = new Board();
         chessBoard.populateBoardWithTiles();
         chessBoard.populateBoardWithPieces();
@@ -66,7 +63,7 @@ public class ChessGame {
     /**
      * A method to start the game thread and run game loop
      */
-    public void gameStart() {
+    private void gameStart() {
         Thread gameThread = new Thread() {
             @Override
             public void run() {
@@ -79,7 +76,7 @@ public class ChessGame {
     /**
      * A helper method to start the game loop
      */
-    public void gameLoop() {
+    private void gameLoop() {
         while(true) {
             if(gameOver) {
                 break;
@@ -91,13 +88,13 @@ public class ChessGame {
     /**
      * A method to set up initial display (gamePanel and sidePanel) for the game
      */
-    public void setUpDisplay() {
+    private void setUpDisplay() {
         window = new JFrame("Chess");
         gamePanel = initializeGamePanel(chessBoard);
         Container contentPanel = window.getContentPane();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.LINE_AXIS));
 
-        sidePanel = initializeSidePanel();
+        JPanel sidePanel = initializeSidePanel();
         contentPanel.add(gamePanel);
         contentPanel.add(sidePanel);
         window.setVisible(true);
@@ -130,9 +127,9 @@ public class ChessGame {
 
         setUpButtonListeners();
 
-        whiteLabel = new JLabel("Player 1: ".concat(playerWhite.playerName));
+        JLabel whiteLabel = new JLabel("Player 1: ".concat(playerWhite.playerName));
         whiteLabel.setForeground(java.awt.Color.BLUE);
-        blackLabel = new JLabel("Player 2: ".concat(playerBlack.playerName));
+        JLabel blackLabel = new JLabel("Player 2: ".concat(playerBlack.playerName));
 
         whiteScore = new JLabel("Score: " + playerWhite.playerScore);
         whiteScore.setForeground(java.awt.Color.BLUE);
@@ -235,7 +232,7 @@ public class ChessGame {
     /**
      * A method to override results of mouse actions
      */
-    public void mouseActions() {
+    private void mouseActions() {
         gamePanel.addMouseListener(new MouseAdapter() {
             /**
              * {@inheritDoc}

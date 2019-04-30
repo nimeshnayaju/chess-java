@@ -20,7 +20,7 @@ public class Board {
     /**
      * Method to populate board with black and white tiles
      */
-    protected void populateBoardWithTiles() {
+    void populateBoardWithTiles() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 if (i % 2 == 0) {
@@ -42,7 +42,7 @@ public class Board {
     /**
      * Method to populate board with standard pieces
      */
-    public void populateBoardWithPieces() {
+    void populateBoardWithPieces() {
         setUpKnights();
         setUpBishops();
         setUpPawns();
@@ -54,7 +54,7 @@ public class Board {
     /**
      * Method to set up Knights into their initial position
      */
-    public void setUpKnights() {
+    private void setUpKnights() {
         Knight whiteKnightLeft = new Knight(1, 0, Color.WHITE, this);
         Knight whiteKnightRight = new Knight(6, 0, Color.WHITE, this);
 
@@ -75,7 +75,7 @@ public class Board {
     /**
      * Method to set up Rooks into their initial position
      */
-    public void setUpBishops() {
+    private void setUpBishops() {
         Bishop whiteBishopLeft = new Bishop(2, 0, Color.WHITE, this);
         Bishop whiteBishopRight = new Bishop(5, 0, Color.WHITE, this);
 
@@ -96,7 +96,7 @@ public class Board {
     /**
      * Method to set up Bishops into their initial position
      */
-    public void setUpRooks() {
+    private void setUpRooks() {
         Rook whiteRookLeft = new Rook(0, 0, Color.WHITE, this);
         Rook whiteRookRight = new Rook(7, 0, Color.WHITE, this);
 
@@ -117,7 +117,7 @@ public class Board {
     /**
      * Method to set up Pawns into their initial position
      */
-    public void setUpPawns() {
+    private void setUpPawns() {
         for(int i = 0; i < BOARD_SIZE; i++) {
             Pawn whitePawn = new Pawn(i, 1, Color.WHITE, this);
             Pawn blackPawn = new Pawn(i, 6, Color.BLACK, this);
@@ -133,7 +133,7 @@ public class Board {
     /**
      * Method to set up Queens into their initial position
      */
-    public void setUpQueens() {
+    private void setUpQueens() {
         Queen whiteQueen = new Queen(3, 0, Color.WHITE, this);
 
         Queen blackQueen = new Queen(3, 7, Color.BLACK, this);
@@ -148,7 +148,7 @@ public class Board {
     /**
      * Method to set up Kings into their initial position
      */
-    public void setUpKings() {
+    private void setUpKings() {
         whiteKing = new King(4, 0, Color.WHITE, this);
 
         blackKing = new King(4, 7, Color.BLACK, this);

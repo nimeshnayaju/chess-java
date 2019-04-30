@@ -2,16 +2,16 @@ package com.chess.engine.game;
 
 import com.chess.engine.pieces.Piece;
 
-public class Move {
-    Piece movingPiece;
-    Piece enemyPiece;
-    int originRow;
-    int originCol;
+class Move {
+    private Piece movingPiece;
+    private Piece enemyPiece;
+    private int originRow;
+    private int originCol;
 
-    int finalRow;
-    int finalCol;
+    private int finalRow;
+    private int finalCol;
 
-    public Move(Piece movingPiece, Piece enemyPiece, int finalRow, int finalCol) {
+    Move(Piece movingPiece, Piece enemyPiece, int finalRow, int finalCol) {
         this.movingPiece = movingPiece;
         this.enemyPiece = enemyPiece;
         this.originRow = movingPiece.row;
@@ -24,14 +24,14 @@ public class Move {
     /**
      * A method to execute a move on a Piece
      */
-    public void executeMove() {
+    void executeMove() {
         movingPiece.movePiece(finalRow, finalCol);
     }
 
     /**
      * A method to undo a move
      */
-    public void undo() {
+    void undo() {
         this.movingPiece.movePiece(originRow, originCol);
         if(this.enemyPiece != null) {
             this.enemyPiece.movePiece(finalRow, finalCol);
