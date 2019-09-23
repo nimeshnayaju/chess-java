@@ -1,1 +1,1 @@
-![Gameplay] (https://github.com/nimeshnayaju/chess-java/screenshots/gameplay.png)
+![gameplay] (https://github.com/nimeshnayaju/chess-java/blob/master/screenshots/gameplay.png)
